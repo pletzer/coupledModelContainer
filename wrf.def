@@ -1,0 +1,128 @@
+BootStrap: docker
+From: intel/oneapi-hpckit:devel-ubuntu22.04
+
+%environment
+    export WRF_DEPS_DIR=$PWD/software
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
+    export PATH="$WRF_DEPS_DIR/bin:$PATH"
+
+
+%post
+    apt -y update
+    apt -y install wget
+    apt -y install zlib1g zlib1g-dev
+    apt -y install libsz2
+
+    # versions
+    HDF5_VERSION="1.12.2"
+    NETCDF_C_VERSION="4.9.2"
+    NETCDF_FORTRAN_VERSION="4.6.1"
+    PNETCDF_VERSION="1.12.3"
+    WRF_VERSION="4.1.1"
+
+    export WRF_DEPS_DIR=$PWD/software
+
+    # compilers
+    export CC=icc
+    export CXX=icc
+    export FC=ifort
+    export F77=ifort
+    export MPICC=mpiicc
+    export MPICXX=mpiicc
+    export MPIF77=mpiifort
+    export MPIF90=mpiifort
+
+    export NETCDF=$WRF_DEPS_DIR
+    export HDF5=$WRF_DEPS_DIR
+    export PNETCDF=$WRF_DEPS_DIR
+
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
+
+    mkdir -p $WRF_DEPS_DIR
+    cd $WRF_DEPS_DIR
+
+    # hdf5
+    HDF5_VERSION_SHORT=$(echo $HDF5_VERSION | awk -F '.' '{print $1"."$2}')
+    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_SHORT}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz
+    tar xf hdf5-${HDF5_VERSION}.tar.gz
+    cd hdf5-${HDF5_VERSION}
+    mkdir build
+    cd build
+    CC=MPICC ../configure --prefix=$WRF_DEPS_DIR --enable-parallel
+    make -j 4
+    make install
+    cd ../..
+
+    # netcdf-c
+    wget https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_C_VERSION}/netcdf-c-${NETCDF_C_VERSION}.tar.gz
+    tar xf netcdf-c-${NETCDF_C_VERSION}.tar.gz
+    cd netcdf-c-${NETCDF_C_VERSION}
+    mkdir build
+    cd build
+    CPPFLAGS="-I${WRF_DEPS_DIR}/include" LDFLAGS="-L${WRF_DEPS_DIR}/lib -lhdf5 -lhdf5_hl" \
+    ../configure --prefix=$WRF_DEPS_DIR --enable-pnetcdf
+    make -j 4
+    make install
+    cd ../..
+
+    # netcdf-fortran
+    wget https://downloads.unidata.ucar.edu/netcdf-fortran/${NETCDF_FORTRAN_VERSION}/netcdf-fortran-${NETCDF_FORTRAN_VERSION}.tar.gz
+    tar xf netcdf-fortran-${NETCDF_FORTRAN_VERSION}.tar.gz
+    cd netcdf-fortran-${NETCDF_FORTRAN_VERSION}
+    mkdir build
+    cd build
+    CPPFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --cflags)" LDFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --libs)" \
+    ../configure --prefix=$WRF_DEPS_DIR
+    make
+    make install
+    cd ../..
+
+    # pnetcdf
+    wget https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION}.tar.gz
+    tar xf pnetcdf-${PNETCDF_VERSION}.tar.gz
+    cd pnetcdf-${PNETCDF_VERSION}
+    mkdir build
+    cd build
+    ../configure --prefix=$WRF_DEPS_DIR --with-netcdf4=$WRF_DEPS_DIR
+    make
+    make install
+    cd ../..
+
+    # wrf
+    wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
+    tar xf v${WRF_VERSION}.tar.gz
+    cd WRF-${WRF_VERSION}
+    cat > compile.in << EOF
+    15
+    1
+    EOF
+    ./configure < compile.in
+    ./compile em_real >& log.compile
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # build HDF5
+    HDF5_VERSION_SHORT=$(echo $HDF5_VERSION | awk -F '.' '{print $1"."$2"')
+    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_SHORT}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz
+    # build netcdf-c
+    # build netcdf-fortran
+    # build pnetcdf
+    # build WRF
+    apt -y update
+    apt -y install cmake/stable
+    ln -s /usr/local/bin/gfortran /usr/bin/gfortran
+    apt -y install mpich/stable
+    git clone https://github.com/pletzer/fidibench
+    cd fidibench && mkdir build && cd build && cmake ..
+    cmake --build .
+    cmake --install . --prefix /usr/local/fidibench
