@@ -12,6 +12,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     apt -y install wget
     apt -y install zlib1g zlib1g-dev
     apt -y install libsz2
+    apt -y install libxml2-dev
 
     # versions
     HDF5_VERSION="1.12.2"
@@ -48,7 +49,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd hdf5-${HDF5_VERSION}
     mkdir build
     cd build
-    CC=MPICC ../configure --prefix=$WRF_DEPS_DIR --enable-parallel
+    CC=$MPICC FC=$MPIF90 ../configure --prefix=$WRF_DEPS_DIR --enable-parallel --enable-fortran
     make -j 4
     make install
     cd ../..
@@ -59,8 +60,9 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd netcdf-c-${NETCDF_C_VERSION}
     mkdir build
     cd build
-    CPPFLAGS="-I${WRF_DEPS_DIR}/include" LDFLAGS="-L${WRF_DEPS_DIR}/lib -lhdf5 -lhdf5_hl" \
-    ../configure --prefix=$WRF_DEPS_DIR --enable-pnetcdf
+    CPPFLAGS="-I${WRF_DEPS_DIR}/include" \
+     LDFLAGS="-L${WRF_DEPS_DIR}/lib -lhdf5 -lhdf5_hl" \
+     CC=$MPICC ../configure --prefix=$WRF_DEPS_DIR 
     make -j 4
     make install
     cd ../..
