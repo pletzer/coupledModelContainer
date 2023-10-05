@@ -3,7 +3,7 @@
 #SBATCH --partition=milan
 #SBATCH --time=0-04:00:00
 #SBATCH --mem=20GB
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=4
 # load environment module
 module purge
 module load Apptainer/1.2.2
