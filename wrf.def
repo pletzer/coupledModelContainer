@@ -108,11 +108,15 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
-    cat > compile.in << EOF
+    cat > configure.in << EOF
 15
 1
 EOF
-    ./configure < compile.in
+    echo "WRF configuration settings...."
+    cat configure.in
+    echo "Configuring WRF..."
+    ./configure < configure.in
+    echo "Compiling WRF..."
     ./compile em_real >& log.compile
-    tail log.compile
+    tail -500 log.compile
 
