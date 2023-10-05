@@ -2,7 +2,7 @@ BootStrap: docker
 From: intel/oneapi-hpckit:devel-ubuntu22.04
 
 %environment
-    export WRF_DEPS_DIR=$PWD/software
+    export WRF_DEPS_DIR=/software
     export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
     export PATH="$WRF_DEPS_DIR/bin:$PATH"
 
@@ -22,7 +22,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     PNETCDF_VERSION="1.12.3"
     WRF_VERSION="4.1.1"
 
-    export WRF_DEPS_DIR=$PWD/software
+    export WRF_DEPS_DIR=/software
 
     # compilers
     export CC=icc
@@ -109,9 +109,9 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
     cat > compile.in << EOF
-    15
-    1
-    EOF
+15
+1
+EOF
     ./configure < compile.in
     ./compile em_real >& log.compile
     tail log.compile
