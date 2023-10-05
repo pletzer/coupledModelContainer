@@ -116,29 +116,3 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     ./compile em_real >& log.compile
     tail log.compile
 
-
-
-
-
-
-
-
-
-
-
-
-    # build HDF5
-    HDF5_VERSION_SHORT=$(echo $HDF5_VERSION | awk -F '.' '{print $1"."$2"')
-    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_SHORT}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz
-    # build netcdf-c
-    # build netcdf-fortran
-    # build pnetcdf
-    # build WRF
-    apt -y update
-    apt -y install cmake/stable
-    ln -s /usr/local/bin/gfortran /usr/bin/gfortran
-    apt -y install mpich/stable
-    git clone https://github.com/pletzer/fidibench
-    cd fidibench && mkdir build && cd build && cmake ..
-    cmake --build .
-    cmake --install . --prefix /usr/local/fidibench
