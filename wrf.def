@@ -111,7 +111,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     echo "Copying the configuration file..."
-    wget https://github.com/pletzer/coupledModelContainer/blob/main/configure.wrf
+    wget https://raw.githubusercontent.com/pletzer/coupledModelContainer/main/configure.wrf
     cat configure.wrf
     echo "Compiling WRF..."
     ./compile em_real >& log.compile
