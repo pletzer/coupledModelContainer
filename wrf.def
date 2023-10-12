@@ -121,4 +121,4 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     wget https://raw.githubusercontent.com/pletzer/coupledModelContainer/main/configure.wrf
     cat configure.wrf
     echo "Compiling WRF..."
-    ./compile em_real 2>&1 log.out
+    ./compile em_real
