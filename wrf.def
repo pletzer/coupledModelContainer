@@ -6,6 +6,11 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
     export PATH="$WRF_DEPS_DIR/bin:$PATH"
 
+    export WRF_DEPS_DIR=/software
+    export NETCDF=$WRF_DEPS_DIR
+    export HDF5=$WRF_DEPS_DIR
+    export PNETCDF=$WRF_DEPS_DIR
+
 
 %post
     apt -y update
@@ -111,8 +116,8 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
-    ls
-    echo "Copying the configuration file..."
+    #ls
+    #echo "Copying the configuration file..."
     wget https://raw.githubusercontent.com/pletzer/coupledModelContainer/main/configure.wrf
     cat configure.wrf
     echo "Compiling WRF..."
