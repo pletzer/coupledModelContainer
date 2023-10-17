@@ -1,0 +1,57 @@
+#!Jinja2
+[scheduler]
+{% set NPS = 16, 32, 64, 128 %}
+[task parameters]
+    # run multiple instances
+    m = 0..4
+[scheduling] # Define the tasks and when they should run
+  [[graph]]
+
+    R1 = """ # run this graph once
+    {% for NP in NPS %}
+        run{{ NP }}p_1t<m>? => analyse
+    {% endfor %}
+    """
+[runtime] # Define what each task should run
+  [[root]]
+    [[[environment]]]
+      BASE_DIR="/nesi/nobackup/pletzera/coupledModelContainer/run"
+      COPY_DIR="/nesi/nobackup/nesi99991/asp23/workspace/pletzera/wrf_exercises/run_control"
+  {% for NP in NPS %}
+  [[run{{ NP }}p_1t<m>]]
+    platform = mahuika-slurm # Run "cylc conf" to see platforms. 
+    execution retry delays = 1*PT10S # retry
+    script = """
+    rundir="${BASE_DIR}/run{{ NP }}p_1t_${CYLC_TASK_PARAM_m}"
+    mkdir -p $rundir
+    cd $rundir
+    cp -r $COPY_DIR/* .
+    echo "Running using {{ NP }} procs and 1 threads in $(pwd)... "
+    module purge
+    module load  Apptainer
+    export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
+    srun apptainer exec /nesi/nobackup/pletzera/coupledModelContainer/wrf.sif /software/WRF-4.1.1/main/wrf.exe
+    echo "done"
+    cd ..
+    """
+    [[[directives]]] # Default SLURM options for the tasks below
+       --account = nesi99999 # CHANGE
+       --hint = nomultithread
+       --mem = 20GB
+       --time = 04:00:00
+       --cpus-per-task = 1
+       --ntasks = {{ NP }}
+       --partition = milan
+       --nodes = 1
+  {% endfor %}
+  [[analyse]]
+
+    platform = localhost
+    script = """
+    module purge
+    module load Python
+    cd /nesi/nobackup/pletzera/coupledModelContainer/cylc-wrf
+    echo "Running analyse in directory $(pwd)..."
+    python analyse.py
+    """
+
