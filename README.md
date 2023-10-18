@@ -65,7 +65,7 @@ to build the wrf container. This will take definition file "wrf.def" and build t
 
 You can check that the "sif" file built correcty by typing
 ```
-apptainer shell wrf.sf
+apptainer shell wrf.sif
 ```
 You will land in a shell environment. You may type any Unix command. For instance, check that the executable "wrf.exe" has been 
 built:
