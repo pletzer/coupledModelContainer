@@ -1,6 +1,6 @@
 #!Jinja2
 [scheduler]
-{% set NPS = 16, 32, 64, 128 %}
+{% set NPS = 8, 16, 32, 64 %}
 [task parameters]
     # run multiple instances
     m = 0..4
