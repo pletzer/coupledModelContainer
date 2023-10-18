@@ -151,8 +151,8 @@ OMPCC           =       # -qopenmp -fpp -auto
 SFC             =       ifort
 SCC             =       icc
 CCOMP           =       icc
-DM_FC           =       mpif90 -f90=$(SFC) -qopenmp # need to link against the OpenMP libraries
-DM_CC           =       mpicc -cc=$(SCC) -qopenmp
+DM_FC           =       mpiifort -qopenmp # need to link against the OpenMP libraries
+DM_CC           =       mpiicc -qopenmp
 FC              =        $(DM_FC)
 CC              =       $(DM_CC) -DFSEEKO64_OK 
 LD              =       $(FC)
