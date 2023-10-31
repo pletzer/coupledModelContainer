@@ -147,10 +147,15 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     ls $WRF_DEPS_DIR/bin
 
     # esmf
-    cd $WRF_DEPS
+    cd $WRF_DEPS_DIR
     wget https://github.com/esmf-org/esmf/archive/refs/tags/v${ESMF_VERSION}.tar.gz
     tar xf v${ESMF_VERSION}.tar.gz
     cd esmf-${ESMF_VERSION}
+    echo "ESMF_DIR=$ESMF_DIR"
+    echo "ESMF_ABI=$EMSF_ABI"
+    echo "ESMF_BOPT=$ESMF_BOPT"
+    echo "ESMF_COMPILER=$ESMF_COMPILER"
+    echo "ESMF_COMM=$ESMF_COMM"
     make 
     make install
 
