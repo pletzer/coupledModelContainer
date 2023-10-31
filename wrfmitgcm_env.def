@@ -55,7 +55,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_NETCDF_LIBPATH="$WRF_DEPS_DIR/lib"
     export ESMF_ABI="64"
     export ESMF_BOPT="O"
-    export ESMF_BOPT="intelmpi"
+    export ESMF_COMM="intelmpi"
     export ESMF_COMPILER="intel"
     export ESMF_PNETCDF="standard"
     export ESMF_PNETCDF_INCLUDE="$WRF_DEPS_DIR/include"
@@ -117,13 +117,13 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd ../..
 
     # netcdf-c++
-    cd $WRF_DEPS
+    cd $WRF_DEPS_DIR
     wget https://downloads.unidata.ucar.edu/netcdf-cxx/${NETCDF_CXX_VERSION}/netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
-    tar xf netcdf-cxx4-${NETCDF_CXX_VERSION}tar.gz
+    tar xf netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
     cd netcdf-cxx4-${NETCDF_CXX_VERSION}
     mkdir build
     cd build
-    CPPFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --cflags)" LDFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --libs)" \
+    CC=$CC CXX=$CXX CPPFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --cflags)" LDFLAGS="$(${WRF_DEPS_DIR}/bin/nc-config --libs)" \
     ../configure --prefix=$WRF_DEPS_DIR
     make
     make install
@@ -150,9 +150,9 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd $WRF_DEPS
     wget https://github.com/esmf-org/esmf/archive/refs/tags/v${ESMF_VERSION}.tar.gz
     tar xf v${ESMF_VERSION}.tar.gz
-    cd $ESMF_DIR
-    gmake 
-    gmake install
+    cd esmf-${ESMF_VERSION}
+    make 
+    make install
 
     # wrf
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
