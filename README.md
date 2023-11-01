@@ -23,7 +23,7 @@ where "/software/WRF-4.1.1/main/wrf.exe" is the full path to the executable stor
 ## MPI code running under SLURM
 
 MPI calls can be delegated from inside the container to the host, which, in the case of SLURM, will manage resources. For instance, 
-```
+```bash
 ...
 #SBATCH --ntasks = 40
 ...
@@ -60,7 +60,7 @@ You will likely need to access data stored on NeSI's file system. As built, the 
  * /home
 
 So you can 
-```
+```bash
 ...
 cd <wrf_input_dir>
 
