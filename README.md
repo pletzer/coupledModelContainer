@@ -27,6 +27,7 @@ MPI calls can be delegated from inside the container to the host, which, in the 
 ...
 #SBATCH --ntasks = 40
 ...
+module load Apptainer
 module load intel        # load the Intel MPI
 export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nodes
 
@@ -45,6 +46,7 @@ Copyright 2003-2022, Intel Corporation.
 ```
 On mahuika, we have
 ```
+ml Apptainer
 ml intel
 $ mpiexec --version
 Intel(R) MPI Library for Linux* OS, Version 2021.5 Build 20211102 (id: 9279b7d62)
