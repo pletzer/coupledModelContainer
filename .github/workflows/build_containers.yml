@@ -1,0 +1,33 @@
+# TODO ensure artefacts have limited lifetime on github packages
+# TODO cancel current workflow if new run on the same branch, see https://stackoverflow.com/a/67939898
+name: Build container image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'conf/**'
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install -y wget
+      - name: Install Apptainer
+        run: |
+          wget https://github.com/apptainer/apptainer/releases/download/v1.2.4/apptainer_1.2.4_amd64.deb
+          sudo apt-get install -y ./apptainer_1.2.4_amd64.deb
+      - uses: actions/checkout@v3
+      - name: Build container
+        working-directory: ./conf
+        run: sudo apptainer build wrfmitgcm_env.sif wrfmitgcm_env.def 
+      - name: Login and deploy
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
+          apptainer push conf/container.sif "oras://ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF_NAME}"
