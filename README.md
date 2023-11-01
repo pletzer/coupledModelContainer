@@ -27,10 +27,29 @@ MPI calls can be delegated from inside the container to the host, which, in the 
 ...
 #SBATCH --ntasks = 40
 ...
-srun apptainer exec wrf.sif /software/WRF-4.1.1/main/wrf.exe
+module load intel        # load the Intel MPI
+export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nodes
+
+# -B /opt/slurm/lib64/ binds this directory to the image when running on mahuika, 
+# it is required  for the image's MPI to find the libpmi2.so library. This path
+# may be different on a different host.
+srun apptainer exec -B /opt/slurm/lib64/ wrf.sif /software/WRF-4.1.1/main/wrf.exe
 ```
 will assign 40 MPI tasks to the containerized executable.
 
+For this to work, the MPI version inside the container has to match that on the host. The images are built using 
+```
+Apptainer> mpiexec --version
+Intel(R) MPI Library for Linux* OS, Version 2021.8 Build 20221129 (id: 339ec755a1)
+Copyright 2003-2022, Intel Corporation.
+```
+On mahuika, we have
+```
+ml intel
+$ mpiexec --version
+Intel(R) MPI Library for Linux* OS, Version 2021.5 Build 20211102 (id: 9279b7d62)
+Copyright 2003-2021, Intel Corporation.
+```
 
 ## Mounted directories
 
@@ -44,7 +63,11 @@ So you can
 ```
 ...
 cd <wrf_input_dir>
-srun apptainer exec wrf.sif /software/WRF-4.1.1/main/wrf.exe
+
+ml intel
+export I_MPI_FABRICS=ofi
+
+srun apptainer exec -B /opt/slurm/lib64/ wrf.sif /software/WRF-4.1.1/main/wrf.exe
 ```
 and run the application therein.
 
