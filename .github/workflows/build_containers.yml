@@ -15,12 +15,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 35000
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
       - name: Install dependencies
         run: |
           sudo apt update -y
           sudo apt install -y wget
       - name: Install Apptainer
         run: |
+          echo "Free space"
+          df -h
           wget https://github.com/apptainer/apptainer/releases/download/v1.2.4/apptainer_1.2.4_amd64.deb
           sudo apt-get install -y ./apptainer_1.2.4_amd64.deb
       - uses: actions/checkout@v3
@@ -30,4 +39,4 @@ jobs:
       - name: Login and deploy
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-          apptainer push conf/container.sif "oras://ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF_NAME}"
+          apptainer push conf/wrfmitgcm_env.sif "oras://ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF_NAME}"
