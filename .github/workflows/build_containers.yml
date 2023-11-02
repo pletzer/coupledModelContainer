@@ -39,4 +39,4 @@ jobs:
       - name: Login and deploy
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-          apptainer push conf/wrfmitgcm_env.sif "oras://ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF_NAME}"
+          apptainer push conf/wrfmitgcm_env.sif oras://ghcr.io/${GITHUB_REPOSITORY}_wrfmitgcm_env:${tag}
