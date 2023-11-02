@@ -1,6 +1,4 @@
-# TODO ensure artefacts have limited lifetime on github packages
-# TODO cancel current workflow if new run on the same branch, see https://stackoverflow.com/a/67939898
-name: Build container image
+name: Build/deploy apptainer wrfmitgcm_env.sif
 
 on:
   pull_request:
@@ -9,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
@@ -34,4 +35,4 @@ jobs:
       - name: Login and deploy
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-          apptainer push conf/wrfmitgcm_env.sif oras://ghcr.io/${GITHUB_REPOSITORY}_wrfmitgcm_env:${tag}
+          apptainer push conf/wrfmitgcm_env.sif oras://ghcr.io/${GITHUB_REPOSITORY}_wrfmitgcm_env:
