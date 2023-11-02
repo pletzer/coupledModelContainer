@@ -3,14 +3,9 @@
 name: Build container image
 
 on:
-  workflow_dispatch:
+  pull_request:
   push:
-    branches:
-      - '**'
-    paths:
-      - 'conf/**'
-    tags:
-      - '*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
