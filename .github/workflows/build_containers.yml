@@ -1,16 +1,22 @@
-name: Build/deploy apptainer wrfmitgcm_env.sif
+name: Apptainer Build Deploy
 
 on:
   pull_request:
   push:
 
+env:
+  CONTAINER_NAME: esmfenv 
+
 jobs:
-  build:
+  build-test-container:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+
+    name: Build Container
     steps:
+
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -18,21 +24,25 @@ jobs:
           swap-size-mb: 1024
           remove-dotnet: 'true'
           remove-android: 'true'
-      - name: Install dependencies
-        run: |
-          sudo apt update -y
-          sudo apt install -y wget
+
       - name: Install Apptainer
         run: |
           echo "Free space"
           df -h
+          sudo apt update -y
+          sudo apt install -y wget
           wget https://github.com/apptainer/apptainer/releases/download/v1.2.4/apptainer_1.2.4_amd64.deb
-          sudo apt-get install -y ./apptainer_1.2.4_amd64.deb
+          sudo apt install -y ./apptainer_1.2.4_amd64.deb
+
       - uses: actions/checkout@v3
-      - name: Build container
+
+      - name: Build Container
         working-directory: ./conf
-        run: sudo apptainer build wrfmitgcm_env.sif wrfmitgcm_env.def 
+        run: |
+          sudo apptainer build ${CONTAINER_NAME}.sif ${CONTAINER_NAME}.def
+
       - name: Login and deploy
+        working-directory: ./conf
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-          apptainer push conf/wrfmitgcm_env.sif oras://ghcr.io/${GITHUB_REPOSITORY}_wrfmitgcm_env:
+          apptainer push ${CONTAINER_NAME}.sif oras://ghcr.io/${GITHUB_REPOSITORY}_${CONTAINER_NAME}:
