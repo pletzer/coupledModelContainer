@@ -1,5 +1,5 @@
 Bootstrap: oras
-From: ghoras.io/pletzer/coupled_model_apptainer_esmfenv:latest
+From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv:latest
 
 %post
     WRF_VERSION="4.1.1"
