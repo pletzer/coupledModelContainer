@@ -5,7 +5,7 @@ on:
   push:
 
 env:
-  CONTAINER_NAME: pypack 
+  CONTAINER_NAME: esmfenv
 
 jobs:
   build-test-container:
