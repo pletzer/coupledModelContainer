@@ -5,7 +5,7 @@ on:
   push:
 
 env:
-  CONTAINER_NAME: esmfenv80
+  CONTAINER_NAME: esmfenv84
 
 jobs:
   build-test-container:
