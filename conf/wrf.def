@@ -26,7 +26,7 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv:latest
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
-    wget https://raw.githubusercontent.com/pletzer/coupledModelContainer/main/configure.wrf
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wrf
     cat configure.wrf
     echo "Compiling WRF..."
     ./compile em_real
