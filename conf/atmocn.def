@@ -1,0 +1,34 @@
+Bootstrap: oras
+From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
+
+%post
+
+    # versions
+
+    # env variables
+    export WRF_DEPS_DIR=/software
+    export ESMF_OS=Linux
+
+
+    # check out coupled model
+    cd $WRF_DEPS_DIR
+    git clone git@github.com:alenamalyarenko/pskrips.git
+    cd pskrips
+    git fetch --all
+    git checkout apptainer
+
+    # setup (from bashrc_PSKRIPS)
+    export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
+    export MITGCM_DIR=$(pwd)/models/MITgcm-checkpoint67m/
+    export PSKRIPS_DIR=$(pwd)/models/PSKRIPS/PSKRIPSv1/
+    export PWRF_DIR=$WRF_DIR
+
+    # compile PWRF-4.1.3_PSKRIPSv1.0
+    cd models/PWRF/PWRF-4.1.3_PSKRIPSv1.0
+    ./clean -a
+    cp configure.wrf_cpl configure.wrf
+    ./compile em_real >& log.txt
+
+    # compile PSKRIPS
+    cd ../../PSKRIPS/PSKRIPSv1
+    ./install_linux_amd64_ifort.sh
