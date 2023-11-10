@@ -7,7 +7,15 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
 
     # env variables
     export WRF_DEPS_DIR=/software
+    cd $WRF_DEPS_DIR
+
+
     export ESMF_OS=Linux
+    # setup (from bashrc_PSKRIPS)
+    export WRF_DIR=$PWD/pskrips/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
+    export MITGCM_DIR=$PWD/pskrips/models/MITgcm-checkpoint67m/
+    export PSKRIPS_DIR=$PWD/pskrips/models/PSKRIPS/PSKRIPSv1/
+    export PWRF_DIR=$WRF_DIR
 
 
     # check out coupled model
@@ -16,12 +24,6 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
     cd pskrips
     git fetch --all
     git checkout apptainer
-
-    # setup (from bashrc_PSKRIPS)
-    export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
-    export MITGCM_DIR=$(pwd)/models/MITgcm-checkpoint67m/
-    export PSKRIPS_DIR=$(pwd)/models/PSKRIPS/PSKRIPSv1/
-    export PWRF_DIR=$WRF_DIR
 
     # compile PWRF-4.1.3_PSKRIPSv1.0
     cd models/PWRF/PWRF-4.1.3_PSKRIPSv1.0
