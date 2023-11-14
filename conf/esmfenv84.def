@@ -65,7 +65,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     apt -y install libsz2 libbz2-dev
     apt -y install libxml2-dev
     apt -y install m4 curl libcurl4-openssl-dev
-    apt -y install csh
+    apt -y install tcsh
     apt -y install file
     apt -y install vim
 
