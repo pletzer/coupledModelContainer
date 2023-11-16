@@ -4,9 +4,9 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
 %post
 
     # get the code
-    mkdir -p /software/coupled_model
-    cp -R /nesi/nobackup/pletzera/coupled_model_apptainer/pskrips /software/coupled_model
-    cd /software/coupled_model/pskrips
+    cd $WRF_DEPS_DIR
+    cp -R /nesi/nobackup/pletzera/coupled_model_apptainer/pskrips .
+    cd pskrips
 
     export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
     export PWRF_DIR=$WRF_DIR
