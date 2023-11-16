@@ -34,7 +34,7 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
     ./clean -a
     # clean removes the configure.wrf file
     cp ../configure_apptainer.wrf configure.wrf
-    ./compile em_real >& compile.log
+    ./compile em_real
 
     cd ../../PSKRIPS/PSKRIPSv1/
 
