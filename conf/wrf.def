@@ -1,0 +1,32 @@
+Bootstrap: oras
+From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv:latest
+
+%post
+    WRF_VERSION="4.1.1"
+
+    export WRF_DEPS_DIR=/software
+
+    # compilers
+    export CC=icc
+    export CXX=icc
+    export FC=ifort
+    export F77=ifort
+    export MPICC=mpiicc
+    export MPICXX=mpiicc
+    export MPIF77=mpiifort
+    export MPIF90=mpiifort
+
+    export NETCDF=$WRF_DEPS_DIR
+    export HDF5=$WRF_DEPS_DIR
+    export PNETCDF=$WRF_DEPS_DIR
+
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
+
+    # wrf
+    wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
+    tar xf v${WRF_VERSION}.tar.gz
+    cd WRF-${WRF_VERSION}
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wrf
+    cat configure.wrf
+    echo "Compiling WRF..."
+    ./compile em_real

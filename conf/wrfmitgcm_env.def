@@ -84,6 +84,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     make -j 4
     make install
     cd ../..
+    rm -rf hdf5-${HDF5_VERSION}
     ls $WRF_DEPS_DIR/lib
     ls $WRF_DEPS_DIR/include
     ls $WRF_DEPS_DIR/bin
@@ -100,6 +101,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     make -j 4
     make install
     cd ../..
+    rm -rf netcdf-c-${NETCDF_C_VERSION}
     ls $WRF_DEPS_DIR/lib
     ls $WRF_DEPS_DIR/include
     ls $WRF_DEPS_DIR/bin
@@ -115,6 +117,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     make
     make install
     cd ../..
+    rm -rf netcdf-fortran-${NETCDF_FORTRAN_VERSION}
 
     # netcdf-c++
     cd $WRF_DEPS_DIR
@@ -128,6 +131,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     make
     make install
     cd ../..
+    rm -rf netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
     ls $WRF_DEPS_DIR/lib
     ls $WRF_DEPS_DIR/include
     ls $WRF_DEPS_DIR/bin
@@ -142,6 +146,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     make
     make install
     cd ../..
+    rm -rf pnetcdf-${PNETCDF_VERSION}.tar.gz
     ls $WRF_DEPS_DIR/lib
     ls $WRF_DEPS_DIR/include
     ls $WRF_DEPS_DIR/bin
