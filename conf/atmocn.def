@@ -3,17 +3,10 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
 
 %post
 
-    # versions (nothing to do)
-
-    cd /software
-    mkdir coupled_model
-    cd coupled_model
-
     # get the code
-    git clone git@github.com:alenamalyarenko/pskrips
-    cd pskrips
-    git fetch --all
-    git checkout apptainer_ap
+    mkdir -p /software/coupled_model
+    cp -R ../pskrips /software/coupled_model
+    cd /software/coupled_model/pskrips
 
     export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
     export PWRF_DIR=$WRF_DIR
