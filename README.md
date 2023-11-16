@@ -14,6 +14,13 @@ To access the "apptainer" command, type
 ml Apptainer/1.2.2
 """
 
+## How to remotely fectch a container
+
+For instance,
+```
+apptainer pull emsfenv.sif oras://ghcr.io/pletzer/test_apptainer_deploy_esmfenv84:latest
+```
+
 To run any executable, e.g. WRF, within the container, type
 ```
 apptainer exec wrf.sif /software/WRF-4.1.1/main/wrf.exe
