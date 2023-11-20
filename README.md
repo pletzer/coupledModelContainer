@@ -16,6 +16,16 @@ ml Apptainer/1.2.2
 
 ## Building an executable using a containerized environment
 
+These instructions assume you have cloned this repository
+```
+git clone git@github.com:pletzer/coupled_model_apptainer.git
+```
+and have
+```
+cd coupled_model_apptainer
+```
+
+
 You will need to fetch a container with pre-installed compilers (Intel and MPI) and libraries (HDF5, NetCDF and 
 ESMF). Different versions of ESMF can be downloaded, e.g. ESMF 8.4
 
