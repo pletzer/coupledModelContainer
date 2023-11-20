@@ -20,7 +20,7 @@ These instructions assume you have cloned this repository
 ```
 git clone git@github.com:pletzer/coupled_model_apptainer.git
 ```
-and have
+and have changed into the `coupled_model_apptainer` directory:
 ```
 cd coupled_model_apptainer
 ```
