@@ -88,7 +88,7 @@ export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nod
 srun apptainer exec -B /opt/slurm/lib64/ esmfenv84.sif pskrips/models/PSKRIPS/PSKRIPSv1/coupledCode/esmf_application
 ```
 
-It is likely that for hybrid MPI approach to work, the same MPI libraries inside the apptainer container and on the host must be used, and the versions must match. The images are built using 
+It is likely that for the hybrid MPI approach to work, the same MPI libraries in the container and on the host must be used, and the versions must match. The images are built using 
 ```
 Apptainer> mpiexec --version
 Intel(R) MPI Library for Linux* OS, Version 2021.8 Build 20221129 (id: 339ec755a1)
