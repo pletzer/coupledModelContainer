@@ -96,7 +96,6 @@ Copyright 2003-2022, Intel Corporation.
 ```
 whereas on mahuika, we have
 ```
-ml Apptainer
 ml intel
 $ mpiexec --version
 Intel(R) MPI Library for Linux* OS, Version 2021.5 Build 20211102 (id: 9279b7d62)
