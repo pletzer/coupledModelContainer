@@ -20,7 +20,7 @@ You will need to fetch a container with pre-installed compilers (Intel and MPI) 
 ESMF). Different versions of ESMF can be downloaded, e.g. ESMF 8.4
 
 ```
-apptainer pull emsfenv84.sif oras://ghcr.io/pletzer/test_apptainer_deploy_esmfenv84:latest
+apptainer pull emsfenv84.sif oras://ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
 ```
 This could take some time as the image's size is about 5GB. Once the image is downloaded start the container
 ```
