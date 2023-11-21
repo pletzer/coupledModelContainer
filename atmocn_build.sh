@@ -9,7 +9,7 @@
 # get the code
 git clone git@github.com:alenamalyarenko/pskrips
 cd pskrips
-git checkout apptainer_ap
+git checkout x_ap
 
 export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
 export PWRF_DIR=$WRF_DIR
@@ -52,3 +52,6 @@ cd ..
 cp coupledCode_PSKRIPS/* coupledCode/ 
 cd coupledCode
 ./Allmake.sh
+if [ -f ./esmf_application ]; then 
+    echo "esmf_application was successfully built"
+fi
