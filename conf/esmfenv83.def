@@ -109,7 +109,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export HDF5=$WRF_DEPS_DIR
     export PNETCDF=$WRF_DEPS_DIR
 
-    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$WRF_DEPS_DIR/lib/libO/Linux.intel.64.intelmpi.default:$LD_LIBRARY_PATH"
 
     mkdir -p $WRF_DEPS_DIR
     cd $WRF_DEPS_DIR
