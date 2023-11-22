@@ -9,5 +9,5 @@ module purge
 module load Apptainer/1.2.2
 
 rm -rf pskrips
-apptainer exec esmfenv84.sif bash atmocn_build.sh
+apptainer exec esmfenv83.sif bash atmocn_build.sh
 
