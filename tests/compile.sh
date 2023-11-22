@@ -8,7 +8,7 @@ ml purge
 ml Apptainer
 
 # compile test_netcdf
-apptainer exec ../esmfenv84.sif mpiifort $INC_DIRS test_netcdf.f90 -o test_netcdf $LIB_DIRS $LIBS
+apptainer exec ../esmfenv83.sif mpiifort $INC_DIRS test_netcdf.f90 -o test_netcdf $LIB_DIRS $LIBS
 
 # compile test_esmf
-apptainer exec ../esmfenv84.sif mpiifort $INC_DIRS test_esmf.f90 -o test_esmf $LIB_DIRS $LIBS
+apptainer exec ../esmfenv83.sif mpiifort $INC_DIRS test_esmf.f90 -o test_esmf $LIB_DIRS $LIBS
