@@ -9,7 +9,7 @@
 # get the code
 git clone git@github.com:alenamalyarenko/pskrips
 cd pskrips
-git checkout x_ap
+git checkout x4_ap
 
 export WRF_DIR=$(pwd)/models/PWRF/PWRF-4.1.3_PSKRIPSv1.0/
 export PWRF_DIR=$WRF_DIR
@@ -23,7 +23,7 @@ export SKRIPS_NETCDF_LIB=-L$NETCDF_LIB
 export SKRIPS_MPI_DIR=$MPI_DIR
 export ESMF_LIB=$ESMF_LIB_DIR
 export ESMFMKFILE=$ESMF_LIB/esmf.mk
-export LD_LIBRARY_PATH=$ESMF_LIB/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=$ESMF_LIB_DIR:$LD_LIBRARY_PATH
 
 # compile PWRF
 cd models/PWRF/PWRF-4.1.3_PSKRIPSv1.0
