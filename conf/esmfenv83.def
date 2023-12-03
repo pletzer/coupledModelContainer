@@ -30,6 +30,10 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_IO_LIB="-L$ESMF_LIB_DIR -lesmf -lpioc -L$WRF_DEPS_DIR/lib -lpnetcdf -lnetcdff -lnetcdf -lstdc++"
     export ESMF_IO_LIB_EXT=$ESMF_IO_LIB
 
+    # wps requires those
+    export JASPERLIB=$WRF_DEPS_DIR/lib
+    export JASPERINC=$WRF_DEPS_DIR/include
+
     # wrf requires those
     export NETCDF=$WRF_DEPS_DIR
     export HDF5=$WRF_DEPS_DIR
@@ -75,6 +79,8 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     PNETCDF_VERSION="1.12.3"
     WRF_VERSION="4.1.1"
     ESMF_VERSION="8.3.1"
+    LIBPNG_VERSION="1.2.59"
+    JASPER_VERSION="1.900.1"
 
     export WRF_DEPS_DIR=/software
 
@@ -102,7 +108,6 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_INSTALL_PREFIX="$WRF_DEPS_DIR"
     export ESMF_OPENMP="OFF"
 
-
     export NETCDF=$WRF_DEPS_DIR
     export HDF5=$WRF_DEPS_DIR
     export PNETCDF=$WRF_DEPS_DIR
@@ -110,9 +115,31 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$WRF_DEPS_DIR/lib/libO/Linux.intel.64.intelmpi.default:$LD_LIBRARY_PATH"
 
     mkdir -p $WRF_DEPS_DIR
+
+    # libpng
     cd $WRF_DEPS_DIR
+    wget https://sourceforge.net/projects/libpng/files/libpng12/1.2.59/libpng-${LIBPNG_VERSION}.tar.xz/download
+    tar xf download
+    cd libpng-${LIBPNG_VERSION}
+    ./configure --prefix=$WRF_DEPS_DIR
+    make -j 4
+    make install
+    cd ..
+    rm -rf libpng-${LIBPNG_VERSION}
+
+    # jasper
+    cd $WRF_DEPS_DIR
+    wget https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-${JASPER_VERSION}.tar.gz
+    tar xf jasper-${JASPER_VERSION}.tar.gz
+    cd jasper-${JASPER_VERSION}
+    ./configure --prefix=$WRF_DEPS_DIR
+    make -j 4
+    make install
+    cd ..
+    rm -rf jasper-${JASPER_VERSION}
 
     # hdf5
+    cd $WRF_DEPS_DIR
     HDF5_VERSION_SHORT=$(echo $HDF5_VERSION | awk -F '.' '{print $1"."$2}')
     wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_SHORT}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz
     tar xf hdf5-${HDF5_VERSION}.tar.gz
