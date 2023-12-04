@@ -43,8 +43,9 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
 19
 EOF
     ./configure < inputfile
-    echo "Fixing the compilers
+    echo "Fixing the compilers"
     cat configure.wps | perl -ne "s/mpicc/mpiicc/g;s/mpif90/mpiifort/g;print;" > toto.txt
+    diff toto.txt configure.wps
     mv toto.txt configure.wps
     grep DM_ configure.wps
     echo "Compiling WPS..."
