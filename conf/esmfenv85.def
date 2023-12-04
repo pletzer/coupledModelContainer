@@ -3,7 +3,6 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
 
 %environment
     export WRF_DEPS_DIR=/software
-    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
     export PATH="$WRF_DEPS_DIR/bin:$PATH"
     export NETCDF=$WRF_DEPS_DIR
     export HDF5=$WRF_DEPS_DIR
@@ -53,10 +52,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_NETCDF_LIBPATH=$NETCDF_LIB
     export ESMF_NETCDF_LIBPATH_PREFIX="-Wl,-rpath,$NETCDF_LIB"
 
-
-    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
-
-
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$WRF_DEPS_DIR/lib/libO/Linux.intel.64.intelmpi.default:$LD_LIBRARY_PATH"
 
 %post
     apt -y update
@@ -109,7 +105,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export HDF5=$WRF_DEPS_DIR
     export PNETCDF=$WRF_DEPS_DIR
 
-    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$WRF_DEPS_DIR/lib/libO/Linux.intel.64.intelmpi.default:$LD_LIBRARY_PATH"
 
     mkdir -p $WRF_DEPS_DIR
     cd $WRF_DEPS_DIR

@@ -36,7 +36,15 @@ ESMF). Different versions of ESMF can be downloaded, e.g. ESMF 8.4
 ```
 apptainer pull esmfenv84.sif oras://ghcr.io/pletzer/coupled_model_apptainer_esmfenv84:latest
 ```
-This could take some time as the image's size is about 5GB. Once the image is downloaded start the container
+This could take some time as the image's size is about 5GB. 
+
+Occasionally, I get the error
+```
+FATAL:   While pulling image from oci registry: error fetching image to cache: unable to Download Image: unable to pull from registry: failed to copy: read tcp 192.168.94.15:34531->52.239.170.4:443: read: connection reset by peer
+```
+Try again and it should work.
+
+Once the image is downloaded start the container
 ```
 apptainer shell esmfenv84.sif
 ```

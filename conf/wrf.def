@@ -1,8 +1,9 @@
 Bootstrap: oras
-From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv:latest
+From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
 
 %post
     WRF_VERSION="4.1.1"
+    WPS_VERSION="4.2"
 
     export WRF_DEPS_DIR=/software
 
@@ -23,10 +24,22 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv:latest
     export LD_LIBRARY_PATH="$WRF_DEPS_DIR/lib:$LD_LIBRARY_PATH"
 
     # wrf
+    cd $WRF_DEPS_DIR
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
+    md5sum v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
-    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wrf
-    cat configure.wrf
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/x_ap/configure.wrf
     echo "Compiling WRF..."
     ./compile em_real
+
+    # wps
+    cd $WRF_DEPS_DIR
+    wget https://github.com/wrf-model/WPS/archive/v${WPS_VERSION}.tar.gz
+    tar xf v${WPS_VERSION}.tar.gz
+    cd WPS-${WPS_VERSION}
+    export WRF_DIR=$WRF_DEPS_DIR/WRF-${WRF_VERSION}
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/x_ap/configure.wps
+    echo "Compiling WPS..."
+    ./compile
+    
