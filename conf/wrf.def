@@ -29,7 +29,7 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
     md5sum v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
-    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wrf
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/x_ap/configure.wrf
     echo "Compiling WRF..."
     ./compile em_real
 
@@ -39,7 +39,7 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
     tar xf v${WPS_VERSION}.tar.gz
     cd WPS-${WPS_VERSION}
     export WRF_DIR=$WRF_DEPS_DIR/WRF-${WRF_VERSION}
-    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wps
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/x_ap/configure.wps
     echo "Compiling WPS..."
     ./compile
     
