@@ -39,15 +39,7 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
     tar xf v${WPS_VERSION}.tar.gz
     cd WPS-${WPS_VERSION}
     export WRF_DIR=$WRF_DEPS_DIR/WRF-${WRF_VERSION}
-    cat > inputfile << EOF
-19
-EOF
-    ./configure < inputfile
-    echo "Fixing the compilers"
-    cat configure.wps | perl -ne "s/mpicc/mpiicc/g;s/mpif90/mpiifort/g;print;" > toto.txt
-    diff toto.txt configure.wps
-    mv toto.txt configure.wps
-    grep DM_ configure.wps
+    wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wps
     echo "Compiling WPS..."
     ./compile
     
