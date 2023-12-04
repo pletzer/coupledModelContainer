@@ -26,14 +26,10 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
     # wrf
     cd $WRF_DEPS_DIR
     wget https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz
+    md5sum v${WRF_VERSION}.tar.gz
     tar xf v${WRF_VERSION}.tar.gz
     cd WRF-${WRF_VERSION}
     wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/main/configure.wrf
-    cat > inputfile << EOF
-15
-1
-EOF
-    ./configure < inputfile
     echo "Compiling WRF..."
     ./compile em_real
 
