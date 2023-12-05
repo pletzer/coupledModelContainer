@@ -40,6 +40,8 @@ From: ghcr.io/pletzer/coupled_model_apptainer_esmfenv83:latest
     cd WPS-${WPS_VERSION}
     export WRF_DIR=$WRF_DEPS_DIR/WRF-${WRF_VERSION}
     wget https://raw.githubusercontent.com/pletzer/coupled_model_apptainer/x_ap/configure.wps
+    # no need to set MPI_LIB as we are compiling with mpiifort
+    export MPI_LIB=""
     echo "Compiling WPS..."
     ./compile
     
