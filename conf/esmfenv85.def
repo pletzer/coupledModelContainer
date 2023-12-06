@@ -42,7 +42,6 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
 
     export MPI_DIR=/opt/intel/oneapi/mpi/2021.8.0/
     export MPI_INC=$MPI_DIR/include
-    export MPI_LIB=$MPI_DIR/lib
 
     export SKRIPS_NETCDF_INCLUDE=-I$NETCDF_INC
     export SKRIPS_NETCDF_LIB=-L$NETCDF_LIB
