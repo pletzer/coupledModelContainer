@@ -14,6 +14,11 @@ To access the "apptainer" command, type
 ml Apptainer/1.2.2
 ```
 
+Note: some operations like `apptainer pull` will cache files, by default in your home directory. In order to avoid hitting your `$HOME` disk storage quota on NeSI platform, we recommend to
+```
+export APPTAINER_CACHEDIR=/nesi/nobackup/YOUR_PROJECT/tmp
+```
+
 ## Building an executable using a containerized environment
 
 These instructions assume you have cloned this repository
