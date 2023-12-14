@@ -21,6 +21,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_NETCDF="split"
     export ESMF_ABI="64"
     export ESMF_BOPT="O"
+    export ESMF_ESMF_OPTLEVEL="3"
     export ESMF_COMM="intelmpi"
     export ESMF_COMPILER="intel"
     export ESMF_LAPACK="mkl"
@@ -225,9 +226,11 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     echo "ESMF_DIR=$ESMF_DIR"
     echo "ESMF_ABI=$EMSF_ABI"
     echo "ESMF_BOPT=$ESMF_BOPT"
+    echo "ESMF_OPTLEVEL=$ESMF_OPTLEVEL"
     echo "ESMF_COMPILER=$ESMF_COMPILER"
     echo "ESMF_COMM=$ESMF_COMM"
-    make 
+    make
+    make build_examples
     make install
     cd $WRF_DEPS_DIR
     rm -rf $WRF_DEPS_DIR/esmf-${ESMF_VERSION}
