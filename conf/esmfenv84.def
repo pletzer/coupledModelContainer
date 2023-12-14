@@ -109,6 +109,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_DIR="$WRF_DEPS_DIR/esmf-${ESMF_VERSION}"
     export ESMF_INSTALL_PREFIX="$WRF_DEPS_DIR"
     export ESMF_OPENMP="OFF"
+    export ESMF_LAPACK="mkl"
 
     export NETCDF=$WRF_DEPS_DIR
     export HDF5=$WRF_DEPS_DIR
@@ -225,7 +226,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     tar xf v${ESMF_VERSION}.tar.gz
     cd esmf-${ESMF_VERSION}
     echo "ESMF_DIR=$ESMF_DIR"
-    echo "ESMF_ABI=$EMSF_ABI"
+    echo "ESMF_ABI=$ESMF_ABI"
     echo "ESMF_BOPT=$ESMF_BOPT"
     echo "ESMF_OPTLEVEL=$ESMF_OPTLEVEL"
     echo "ESMF_COMPILER=$ESMF_COMPILER"
