@@ -99,7 +99,7 @@ in any of the mounted directories. The build process could take several hours. N
 The coupled model application is called `esmf_application`:
 ```
 Apptainer> find . -name esmf_application
-models/PSKRIPS/PSKRIPSv1/coupledCode/esmf_application
+models/PSKRIPS/PSKRIPSv2/coupledCode/esmf_application
 ```
 Exit the container shell with
 ```
@@ -125,7 +125,7 @@ export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nod
 # -B /opt/slurm/lib64/ binds this directory to the image when running on mahuika, 
 # it is required  for the image's MPI to find the libpmi2.so library. This path
 # may be different on a different host.
-srun apptainer exec -B /opt/slurm/lib64/ esmfenv86.sif pskrips/models/PSKRIPS/PSKRIPSv1/coupledCode/esmf_application
+srun apptainer exec -B /opt/slurm/lib64/ esmfenv86.sif pskrips/models/PSKRIPS/PSKRIPSv2/coupledCode/esmf_application
 ```
 
 
