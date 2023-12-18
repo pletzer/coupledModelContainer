@@ -125,7 +125,9 @@ export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nod
 # -B /opt/slurm/lib64/ binds this directory to the image when running on mahuika, 
 # it is required  for the image's MPI to find the libpmi2.so library. This path
 # may be different on a different host.
-srun apptainer exec -B /opt/slurm/lib64/ esmfenv86.sif pskrips/models/PSKRIPS/PSKRIPSv2/coupledCode/esmf_application
+SIF_FILE="PATH_TO/esmfenv86.sif"
+ESMF_APP="PATH_TO/esmf_application"
+srun apptainer exec -B /opt/slurm/lib64/ $SIF_FILE $ESMF_APP
 ```
 
 
