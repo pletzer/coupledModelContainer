@@ -23,6 +23,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     export ESMF_BOPT="O"
     export ESMF_COMM="intelmpi"
     export ESMF_COMPILER="intel"
+    export ESMF_LAPACK="mkl"
 
     export ESMF_LIB_DIR=$WRF_DEPS_DIR/lib/libO/Linux.intel.64.intelmpi.default
     export ESMFMKFILE=$ESMF_LIB_DIR/esmf.mk
@@ -46,7 +47,6 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
 
     export MPI_DIR=/opt/intel/oneapi/mpi/2021.8.0/
     export MPI_INC=$MPI_DIR/include
-    export MPI_LIB=$MPI_DIR/lib
 
     export SKRIPS_NETCDF_INCLUDE=-I$NETCDF_INC
     export SKRIPS_NETCDF_LIB=-L$NETCDF_LIB
