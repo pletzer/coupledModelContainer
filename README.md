@@ -91,7 +91,7 @@ Apptainer> git clone git@github.com:alenamalyarenko/pskrips
 Apptainer> cd pskrips
 Apptainer> git fetch --all
 Apptainer> git checkout app_avx
-Apptainer> bash bash install_model_for_alex_pletzer.sh
+Apptainer> bash install_model_for_alex_pletzer.sh
 ```
 in any of the mounted directories. The build process could take several hours. Note: you can build the coupled model in any directory. 
 
