@@ -1,4 +1,4 @@
-# coupledModelContainer
+# Coupled Model Container
 Collection of definition files for creating containerized coupled models
 
 ## Overview
