@@ -90,10 +90,14 @@ To build the coupled atmosphere-ocean code, type
 Apptainer> git clone git@github.com:alenamalyarenko/pskrips
 Apptainer> cd pskrips
 Apptainer> git fetch --all
-Apptainer> git checkout app_avx
+Apptainer> git checkout app_avx3
 Apptainer> bash install_model_for_alex_pletzer.sh
 ```
 in any of the mounted directories. The build process could take several hours. Note: you can build the coupled model in any directory. 
+
+Note: Branch "app_avx3" uses aggressive compiler optimization flags ("-O3" with AVX2 vectorization). 
+Other branches ("app_avx2" and "app_avx") use lower optimization levels, which will make the code compile faster.
+Aggressive compiler optimization flags can affect the accuracy of the simulation.
 
 
 The coupled model application is called `esmf_application`:
@@ -114,7 +118,7 @@ since the MPI version inside the container does not know about the hardware on t
 Below we show an example of a SLURM script that runs `esmf_application` from within the container. 
 ```bash
 ...
-#SBATCH --ntasks = 48
+#SBATCH --ntasks = 128
 #SBATCH --partition = milan
 #SBATCH --hint = nomultithread # the default is multithread on mahuika
 ...
@@ -130,4 +134,16 @@ ESMF_APP="PATH_TO/esmf_application"
 srun apptainer exec -B /opt/slurm/lib64/ $SIF_FILE $ESMF_APP
 ```
 
+## Performance of the containerized coupled model
 
+Below are some performance results for the concurrent coupling case using 48 processors for the ocean component. Column 
+"sim/clock time" is the ratio between simulation time over execution time, the higher the better. The atmosphere component
+runs about 1.4x slower than the ocean for the same number of MPI tasks each (48) under apptainer on mahuika milan partition.
+
+| platform | maui native | mahuika milan (apptainer) | mahuika milan (apptainer) |
+|----------|-------------|---------------------------|---------------------------|
+| nodes    |    2        |       1                   |       1                   |
+| tasks    |    80       |       80                  |     112                   |
+| sim/clock time | 30x   |       53x                 |     49x                   |
+
+Note: timings will vary according to the load on the computer. 
