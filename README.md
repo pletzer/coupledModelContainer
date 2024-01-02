@@ -137,7 +137,7 @@ srun apptainer exec -B /opt/slurm/lib64/ $SIF_FILE $ESMF_APP
 ## Performance of the containerized coupled model
 
 Below are some performance results for the concurrent coupling case using 48 processors for the ocean component. Column 
-"sim/clock time" is the ratio between simulation time over execution time, the higher the better. The atmosphere component
+"sim/wallclock time" is the ratio between simulation time over execution time, the higher the better. The atmosphere component
 runs about 1.4x slower than the ocean for the same number of MPI tasks each (48) under apptainer on mahuika milan partition.
 
 | platform      | nodes | MPI tasks | sim/wallclock time |
