@@ -138,7 +138,7 @@ since the MPI version inside the container does not know about the hardware on t
 Below we show an example of a SLURM script that runs `esmf_application` from within the container. 
 ```bash
 ...
-#SBATCH --ntasks = 128
+#SBATCH --ntasks = 80
 #SBATCH --partition = milan
 #SBATCH --hint = nomultithread # the default is multithread on mahuika
 ...
@@ -153,6 +153,19 @@ SIF_FILE="PATH_TO/esmfenv86.sif"
 ESMF_APP="PATH_TO/esmf_application"
 srun apptainer exec -B /opt/slurm/lib64/ $SIF_FILE $ESMF_APP
 ```
+
+In addition, you may want to specify the number of nodes. For instance, either use
+```
+#SBATCH --nodes=1-3
+```
+or 
+```
+sbatch --nodes=1-3 ...
+```
+to request up to 3 nodes. 
+
+Unlike on maui, the Broadwell and Milan nodes are shared by default with other users on mahuika. 
+
 
 ## Performance of the containerized coupled model
 
