@@ -82,6 +82,13 @@ You will likely need to access data stored on NeSI's file system. As built, the 
  * /nesi/project
  * /home
 
+## How to mount another directory
+
+You can bind additional directories with
+```
+apptainer shell --bind DIR1,DIR2,... esmfenv86.sif
+```
+where DIR1, DIR2, ... is a list of comma separated directory names.
 
 ## Building the coupled model
 
