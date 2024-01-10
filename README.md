@@ -106,6 +106,19 @@ Note: Branch "app_avx3" uses aggressive compiler optimization flags ("-O3" with 
 Other branches ("app_avx2" and "app_avx") use lower optimization levels, which will make the code compile faster.
 Aggressive compiler optimization flags can affect the accuracy of the simulation.
 
+Compiler flags are set in 
+```
+./models/PWRF/configure.wrf
+```
+for WRF, in 
+```
+./models/PSKRIPS/PSKRIPSv2/utils/linux_amd64_ifort_coupled
+```
+for mitGCM and in
+```
+./models/PSKRIPS/PSKRIPSv2/coupledCode/Makefile
+```
+for the coupler.
 
 The coupled model application is called `esmf_application`:
 ```
