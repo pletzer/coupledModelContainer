@@ -34,7 +34,6 @@ and have navigated into the `coupled_model_apptainer` directory:
 cd coupled_model_apptainer
 ```
 
-
 You will need to fetch a container with pre-installed compilers (Intel and MPI) and libraries (HDF5, NetCDF and 
 ESMF). Different versions of ESMF can be downloaded, e.g. ESMF 8.6
 
@@ -56,7 +55,7 @@ apptainer shell esmfenv86.sif
 You will now be in the container's shell -- the look and feel will be that of a simple Linux system with basic tools and 
 the `vim` editor installed. 
 
-Note: you cannot change the environment, i.e. you cannot install anything in the container once it has been built (although there may be ways around this). 
+Note: you cannot change the environment, i.e. *you cannot install anything* in the container once it has been built (although there may be ways around this). 
 
 Some directories (`/nesi/project` etc, see below) are automatically mounted by the apptainer shell -- you can build code in these mounted directories. Naturally, any executable built by the container can only be run within the container, see section below.
 
