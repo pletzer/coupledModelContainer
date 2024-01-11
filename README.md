@@ -102,9 +102,9 @@ Apptainer> bash install_model_for_alex_pletzer.sh
 ```
 in any of the mounted directories. The build process could take several hours. Note: you can build the coupled model in any directory. 
 
-Note: Branch "app_avx3" uses aggressive compiler optimization flags ("-O3" with AVX2 vectorization). 
-Other branches ("app_avx2" and "app_avx") use lower optimization levels, which will make the code compile faster.
-Aggressive compiler optimization flags can affect the accuracy of the simulation.
+Branch "app_avx3" uses aggressive compiler optimization flags ("-O3" with AVX2 vectorization). 
+Other branches ("app_avx2" and "app_avx") use lower optimization levels, which will make the code compile faster but run slower.
+Aggressive compiler optimization flags can affect the accuracy of the simulation - reduce the optimization level if the code is known to run successively on one platform but not under Apptainer. (No such case has been encountered; however, more testing might be required.)
 
 Compiler flags are set in 
 ```
@@ -135,7 +135,7 @@ Apptainer> exit
 The MPI calls of the `esmf_application` can be delegated from inside the container to the host. This is required when running on multiple nodes and in order to achieve the best performance, 
 since the MPI version inside the container does not know about the hardware on the host.
 
-Below we show an example of a SLURM script that runs `esmf_application` from within the container. 
+Below is an example of a SLURM script that runs `esmf_application` from within the container. 
 ```bash
 ...
 #SBATCH --ntasks = 80
@@ -160,7 +160,7 @@ In addition, you may want to specify the number of nodes. For instance, either u
 ```
 or 
 ```
-sbatch --nodes=1-3 ...
+sbatch --nodes=1-3 SLURM_SCRIPT
 ```
 to request up to 3 nodes. 
 
@@ -171,7 +171,7 @@ Unlike on maui, the Broadwell and Milan nodes are shared by default with other u
 
 Below are some performance results for the concurrent coupling case using 48 processors for the ocean component. Column 
 "sim/wallclock time" is the ratio between simulation time over execution time, the higher the better. The atmosphere component
-runs about 1.4x slower than the ocean for the same number of MPI tasks each (48) under apptainer on mahuika milan partition.
+runs about 1-1.4x slower than the ocean for the same number of MPI tasks each (48) under apptainer on mahuika milan partition.
 
 | platform      | nodes | MPI tasks | sim/wallclock time |
 |---------------|-------|-----------|--------------------|
