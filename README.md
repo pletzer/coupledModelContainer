@@ -131,28 +131,39 @@ Apptainer> exit
 
 ## Running the coupled model
 
+There are two ways to run the coupled model
+
+### Using the host MPI
+
 The MPI calls of the `esmf_application` can be delegated from inside the container to the host. This is required when running on multiple nodes and in order to achieve the best performance, 
 since the MPI version inside the container does not know about the hardware on the host.
 
 Below is an example of a SLURM script that runs `esmf_application` from within the container. 
 ```bash
-...
-#SBATCH --ntasks = 80
-#SBATCH --partition = milan
-#SBATCH --hint = nomultithread # the default is multithread on mahuika
-...
-module load Apptainer
+#!/bin/bash -e
+#SBATCH --job-name=runCase14       # job name (shows up in the queue)
+#SBATCH --time=01:00:00       # Walltime (HH:MM:SS)
+#SBATCH --hint=nomultithread
+#SBATCH --mem-per-cpu=2g             # memory (in MB)
+#SBATCH --ntasks=112         # number of tasks (e.g. MPI)
+#SBATCH --cpus-per-task=1     # number of cores per task (e.g. OpenMP)
+#SBATCH --output=%x-%j.out    # %x and %j are replaced by job name and ID
+#SBATCH --error=%x-%j.err
+#SBATCH --partition=milan
+
+ml purge
+ml Apptainer
+
 module load intel        # load the Intel MPI
 export I_MPI_FABRICS=ofi # turn off shm to allow the code to run on multiple nodes
 
-# -B /opt/slurm/lib64/ binds this directory to the image when running on mahuika, 
-# it is required  for the image's MPI to find the libpmi2.so library. This path
-# may be different on a different host.
-SIF_FILE="PATH_TO/esmfenv86.sif"
-ESMF_APP="PATH_TO/esmf_application"
+
+SIF_FILE="/nesi/nobackup/pletzera/tmp/coupled_model_apptainer/esmfenv86.sif"
+ESMF_APP="/nesi/nobackup/pletzera/tmp/coupled_model_apptainer/pskrips/models/PSKRIPS/PSKRIPSv2/coupledCode/esmf_application"
+
+rm -f PET*LogFile
 srun apptainer exec -B /opt/slurm/lib64/ $SIF_FILE $ESMF_APP
 ```
-
 In addition, you may want to specify the number of nodes. For instance, either use
 ```
 #SBATCH --nodes=1-3
@@ -165,6 +176,37 @@ to request up to 3 nodes.
 
 Unlike on maui, the Broadwell and Milan nodes are shared by default with other users on mahuika. 
 
+Note that we mount `/opt/slurm/lib64/` on Mahuika. This directory contains the `libpmi2.so` library, which provides an abstraction layer to the system management stack.
+Slurm comes with its own `libpmi2.so` library, which can conflict with the one installed on the system. It is recommended to `export I_MPI_PMI_LIBRARY=/path/to/slurm/lib/libpmi2.so` to prevent 
+this.
+
+### Using the Apptainer MPI
+
+It is also possible to use the MPI library bundled with the container. This approach may be simpler in cases the attempts to use the host MPI fail. It has the drawback to limit the execution to a single node.
+
+```bash
+#!/bin/bash -e
+#SBATCH --job-name=runCase14       # job name (shows up in the queue)
+#SBATCH --time=01:00:00       # Walltime (HH:MM:SS)
+#SBATCH --hint=nomultithread
+#SBATCH --mem-per-cpu=2g             # memory (in MB)
+#SBATCH --ntasks=80         # number of tasks (e.g. MPI)
+#SBATCH --cpus-per-task=1     # number of cores per task (e.g. OpenMP)
+#SBATCH --output=%x-%j.out    # %x and %j are replaced by job name and ID
+#SBATCH --error=%x-%j.err
+#SBATCH --partition=milan
+#SBATCH --nodes=1-1
+
+ml purge
+ml Apptainer
+
+SIF_FILE="/nesi/nobackup/pletzera/tmp/coupled_model_apptainer/esmfenv86.sif"
+ESMF_APP="/nesi/nobackup/pletzera/tmp/coupled_model_apptainer/pskrips/models/PSKRIPS/PSKRIPSv2/coupledCode/esmf_application"
+
+rm -f PET*LogFile
+apptainer exec $SIF_FILE mpiexec -n 80 $ESMF_APP
+```
+In the above Slurm script, we request 80 processors and invoke the `mpiexec -n 80 $ESMF_APP` command inside the container.
 
 ## Performance of the containerized coupled model
 
