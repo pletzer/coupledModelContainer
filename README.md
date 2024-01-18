@@ -214,12 +214,12 @@ Below are some performance results for the concurrent coupling case using 48 pro
 "sim/wallclock time" is the ratio between simulation time over execution time, the higher the better. The atmosphere component
 runs about 1-1.4x slower than the ocean for the same number of MPI tasks each (48) under apptainer on mahuika milan partition.
 
-| platform      | nodes | MPI tasks | sim/wallclock time |
-|---------------|-------|-----------|--------------------|
-| maui (native) | 6     | 480       | 51x                |
-| maui (native) | 2     | 80        | 30x                |
-| milan (apptainer) | 1 | 80        | 53x                |
-| milan (apptainer) | 2 | 112       | 41-49x             |
-| milan (apptainer) --hint=multithread | 1 | 112 | 35.5x |
+| platform      | nodes | MPI tasks | physical cores | sim/wallclock time |
+|---------------|-------|-----------|----------------|--------------------|
+| maui (native) | 6     | 480       | 480            | 51x                |
+| maui (native) | 2     | 80        | 80             | 30x                |
+| milan (apptainer) | 1 | 80        | 80             | 53x                |
+| milan (apptainer) | 2 | 112       | 112            | 41-49x             |
+| milan (apptainer) --hint=multithread | 1 | 112 | 56 | 35.5x |
 
 Note: timings will vary according to the load on the computer. 
