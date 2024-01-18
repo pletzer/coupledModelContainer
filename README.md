@@ -220,5 +220,6 @@ runs about 1-1.4x slower than the ocean for the same number of MPI tasks each (4
 | maui (native) | 2     | 80        | 30x                |
 | milan (apptainer) | 1 | 80        | 53x                |
 | milan (apptainer) | 2 | 112       | 41-49x             |
+| milan (apptainer) --hint=multithread | 1 | 112 | 35.5x |
 
 Note: timings will vary according to the load on the computer. 
