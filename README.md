@@ -206,7 +206,9 @@ ESMF_APP="/nesi/nobackup/pletzera/tmp/coupled_model_apptainer/pskrips/models/PSK
 rm -f PET*LogFile
 apptainer exec $SIF_FILE mpiexec -n 80 $ESMF_APP
 ```
-In the above Slurm script, we request 80 processors and invoke the `mpiexec -n 80 $ESMF_APP` command inside the container.
+In the above Slurm script, we request `--ntasks=80` processors and invoke the `mpiexec -n 80 $ESMF_APP` command inside the container, making sure that the number (80) passed to the `mpiexec` command matches the number of tasks.
+
+*Note `--nodes=1-1`, which sets the number of nodes to one.
 
 ## Performance of the containerized coupled model
 
