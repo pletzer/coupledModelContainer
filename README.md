@@ -218,8 +218,8 @@ runs about 1-1.4x slower than the ocean for the same number of MPI tasks each (4
 
 | platform      | nodes | MPI tasks | physical cores | sim/wallclock time |
 |---------------|-------|-----------|----------------|--------------------|
-| maui (native) | 6     | 480       | 480            | 51x                |
-| maui (native) | 2     | 80        | 80             | 30x                |
+| maui (native) | 6     | 480       | 240            | 51x                |
+| maui (native) | 1     | 80        | 40             | 30x                |
 | milan (apptainer) | 1 | 80        | 80             | 53x                |
 | milan (apptainer) | 2 | 112       | 112            | 41-49x             |
 | milan (apptainer) --hint=multithread | 1 | 112 | 56 | 35.5x |
