@@ -113,6 +113,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd $DEPS_DIR
     wget https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-${JASPER_VERSION}.tar.gz
     tar xf jasper-${JASPER_VERSION}.tar.gz
+    rm jasper-${JASPER_VERSION}.tar.gz
     cd jasper-${JASPER_VERSION}
     ./configure --prefix=$DEPS_DIR
     make -j 4
@@ -125,6 +126,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     HDF5_VERSION_SHORT=$(echo $HDF5_VERSION | awk -F '.' '{print $1"."$2}')
     wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_SHORT}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz
     tar xf hdf5-${HDF5_VERSION}.tar.gz
+    rm hdf5-${HDF5_VERSION}.tar.gz
     cd hdf5-${HDF5_VERSION}
     mkdir build
     cd build
@@ -140,6 +142,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     # netcdf-c
     wget https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_C_VERSION}/netcdf-c-${NETCDF_C_VERSION}.tar.gz
     tar xf netcdf-c-${NETCDF_C_VERSION}.tar.gz
+    rm netcdf-c-${NETCDF_C_VERSION}.tar.gz
     cd netcdf-c-${NETCDF_C_VERSION}
     mkdir build
     cd build
@@ -157,6 +160,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     # netcdf-fortran
     wget https://downloads.unidata.ucar.edu/netcdf-fortran/${NETCDF_FORTRAN_VERSION}/netcdf-fortran-${NETCDF_FORTRAN_VERSION}.tar.gz
     tar xf netcdf-fortran-${NETCDF_FORTRAN_VERSION}.tar.gz
+    rm netcdf-fortran-${NETCDF_FORTRAN_VERSION}.tar.gz
     cd netcdf-fortran-${NETCDF_FORTRAN_VERSION}
     mkdir build
     cd build
@@ -171,6 +175,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd $DEPS_DIR
     wget https://downloads.unidata.ucar.edu/netcdf-cxx/${NETCDF_CXX_VERSION}/netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
     tar xf netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
+    rm netcdf-cxx4-${NETCDF_CXX_VERSION}.tar.gz
     cd netcdf-cxx4-${NETCDF_CXX_VERSION}
     mkdir build
     cd build
@@ -187,6 +192,7 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     # pnetcdf
     wget https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION}.tar.gz
     tar xf pnetcdf-${PNETCDF_VERSION}.tar.gz
+    rm pnetcdf-${PNETCDF_VERSION}.tar.gz
     cd pnetcdf-${PNETCDF_VERSION}
     mkdir build
     cd build
