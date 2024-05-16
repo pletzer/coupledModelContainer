@@ -73,6 +73,8 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     JASPER_VERSION="1.900.1"
     ECCODES_VERSION="2.35.0"
     SHUMLIB_VERSION="13.0"
+    GRIB_API_VERSION="1.21.0"
+    LIBAEC_VERSION="1.1.3"
 
     export DEPS_DIR=/software
 
@@ -210,6 +212,20 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     ls $DEPS_DIR/include
     ls $DEPS_DIR/bin
 
+    # libaec, used by ecCodes
+    cd $DEPS_DIR
+    wget https://gitlab.dkrz.de/k202009/libaec/-/archive/v1.1.3/libaec-v${LIBAEC_VERSION}.tar.gz
+    tar xf libaec-v${LIBAEC_VERSION}.tar.gz
+    rm libaec-v${LIBAEC_VERSION}.tar.gz
+    cd libaec-v${LIBAEC_VERSION}/
+    mkdir build
+    cd build/
+    FC=$FC CC=$CC CXX=$CXX  cmake -D CMAKE_INSTALL_PREFIX=$DEPS_DIR ..
+    make
+    make install
+    cd ../..
+    rm -rf libaec-v${LIBAEC_VERSION}
+
     # ecCodes
     cd $DEPS_DIR
     wget https://confluence.ecmwf.int/download/attachments/45757960/eccodes-${ECCODES_VERSION}-Source.tar.gz
@@ -247,5 +263,19 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     # OASIS-MTC
 
     # Grib-api
+    cd $DEPS_DIR
+    wget https://github.com/weathersource/grib_api/archive/refs/tags/v${GRIB_API_VERSION}.tar.gz
+    tar xf  v${GRIB_API_VERSION}.tar.gz
+    rm v${GRIB_API_VERSION}.tar.gz
+    cd grib_api-${GRIB_API_VERSION}
+    mkdir build
+    cd build
+    FC=$FC CC=$CC CXX=$CXX cmake -D CMAKE_INSTALL_PREFIX=$DEPS_DIR ..
+    make 
+    make install
+    cd ../..
+    rm -rf grib_api-${GRIB_API_VERSION}
+
+
 
 
