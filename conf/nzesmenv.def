@@ -71,6 +71,8 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     PNETCDF_VERSION="1.12.3"
     LIBPNG_VERSION="1.2.59"
     JASPER_VERSION="1.900.1"
+    ECCODES_VERSION="2.35.0"
+    SHUMLIB_VERSION="13.0"
 
     export DEPS_DIR=/software
 
@@ -96,12 +98,14 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     cd $DEPS_DIR
     wget https://github.com/metomi/fcm/archive/refs/tags/${FCM_VERSION}.tar.gz
     tar xf ${FCM_VERSION}.tar.gz
-    export PATH=$DEPS_DIR/fcm-${FCM_VERSION}/bin:$PATH
+    mkdir -p ${DEPS_DIR}/bin
+    ln -s ${DEPS_DIR}/fcm-${FCM_VERSION}/bin/fcm ${DEPS_DIR}/bin/fcm
 
     # libpng
     cd $DEPS_DIR
     wget https://sourceforge.net/projects/libpng/files/libpng12/1.2.59/libpng-${LIBPNG_VERSION}.tar.xz/download
     tar xf download
+    rm -rf download
     cd libpng-${LIBPNG_VERSION}
     ./configure --prefix=$DEPS_DIR
     make -j 4
@@ -204,5 +208,39 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
     ls $DEPS_DIR/lib
     ls $DEPS_DIR/include
     ls $DEPS_DIR/bin
+
+    # ecCodes
+    cd $DEPS_DIR
+    wget https://confluence.ecmwf.int/download/attachments/45757960/eccodes-${ECCODES_VERSION}-Source.tar.gz
+    tar xvf eccodes-${ECCODES_VERSION}-Source.tar.gz
+    rm eccodes-${ECCODES_VERSION}-Source.tar.gz
+    cd eccodes-${ECCODES_VERSION}-Source
+    mkdir build
+    cd build
+    FC=$FC CC=$CC CXX=$CXX cmake -D CMAKE_INSTALL_PREFIX=$DEPS_DIR ..
+    make 
+    make install
+    cd ../..
+    rm -rf eccodes-${ECCODES_VERSION}-Source
+
+    # shumlib
+    cd $DEPS_DIR
+    wget https://github.com/metomi/shumlib/archive/refs/tags/um${SHUMLIB_VERSION}.tar.gz
+    tar xf um${SHUMLIB_VERSION}.tar.gz
+    rm um${SHUMLIB_VERSION}.tar.gz
+    cd shumlib-um${SHUMLIB_VERSION}
+    export SHUM_OPENMP=true
+    export LIBDIR_OUT=$DEPS_DIR
+    cat make/vm-x86-gfortran-gcc.mk | \
+        perl -ne "s/gfortran/$FC/g;s/gcc/$CC/g;s/\-fopenmp/-qopenmp/g;s/\-std=f2008ts/-std08/g;s/\-pedantic-errors//;s/\-pedantic//;s/\-fno-range-check//;print;" \
+         > make/vm-x86-ifort-icc.mk
+
+    for lib in 'shum_byteswap' 'shum_data_conv' 'shum_fieldsfile_class' \
+               'shum_latlon_eq_grids' 'shum_string_conv' 'shum_wgdos_packing' \
+               'shum_constants' 'shum_fieldsfile' 'shum_horizontal_field_interp' \
+               'shum_spiral_search' 'shum_thread_utils'; do
+            echo $lib
+            make -f make/vm-x86-ifort-icc.mk $lib
+    done
 
 
