@@ -262,19 +262,19 @@ From: intel/oneapi-hpckit:devel-ubuntu22.04
 
     # OASIS-MTC
 
-    # Grib-api
-    cd $DEPS_DIR
-    wget https://github.com/weathersource/grib_api/archive/refs/tags/v${GRIB_API_VERSION}.tar.gz
-    tar xf  v${GRIB_API_VERSION}.tar.gz
-    rm v${GRIB_API_VERSION}.tar.gz
-    cd grib_api-${GRIB_API_VERSION}
-    mkdir build
-    cd build
-    FC=$FC CC=$CC CXX=$CXX cmake -D CMAKE_INSTALL_PREFIX=$DEPS_DIR ..
-    make 
-    make install
-    cd ../..
-    rm -rf grib_api-${GRIB_API_VERSION}
+    # # Grib-api
+    # cd $DEPS_DIR
+    # wget https://github.com/weathersource/grib_api/archive/refs/tags/v${GRIB_API_VERSION}.tar.gz
+    # tar xf  v${GRIB_API_VERSION}.tar.gz
+    # rm v${GRIB_API_VERSION}.tar.gz
+    # cd grib_api-${GRIB_API_VERSION}
+    # mkdir build
+    # cd build
+    # FC=$FC CC=$CC CXX=$CXX cmake -D CMAKE_INSTALL_PREFIX=$DEPS_DIR ..
+    # make 
+    # make install
+    # cd ../..
+    # rm -rf grib_api-${GRIB_API_VERSION}
 
 
 
